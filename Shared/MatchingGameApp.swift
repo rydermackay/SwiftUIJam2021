@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class Card {
+class Card: ObservableObject {
     let animal: Character
     
     @Published
