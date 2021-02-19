@@ -26,8 +26,20 @@ extension Card: Identifiable {
 
 class Game {
     
-    enum Difficulty {
-        case easy, medium, hard
+    enum Flavor: String, CaseIterable, Identifiable {
+        case chocolate
+        case vanilla
+        case strawberry
+
+        var id: String { self.rawValue }
+    }
+    
+    enum Difficulty: String, CaseIterable, Identifiable {
+        case easy = "easy"
+        case medium = "medium"
+        case hard = "hard"
+        
+        var id: String { return rawValue }
         
         var numberOfCards: Int {
             switch self {

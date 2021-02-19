@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct GameView: View {
     
     let game: Game
     
@@ -38,7 +38,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView(game: Game(difficulty: .medium))
+            GameView(game: Game(difficulty: .medium))
                 .previewLayout(.sizeThatFits)
         }
         
@@ -49,6 +49,9 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct CardView: View {
+    @EnvironmentObject
+    var userSettings: UserSettings
+    
     @ObservedObject
     var card: Card
     
@@ -60,12 +63,14 @@ struct CardView: View {
     }
     
     var body: some View {
+        let cardColor = userSettings.cardColor
+        
         Text(String(card.animal))
             .font(.system(size: 128, weight: .bold, design: Font.Design.rounded))
             .opacity(card.visible ? 1 : 0)
             .foregroundColor(.black)
             .frame(width: 200, height: 300, alignment: .center)
-            .background(card.visible ? Color.white : Color.accentColor)
+            .background(card.visible ? Color.white : cardColor)
             .cornerRadius(16, antialiased: true)
             .onTapGesture { card.visible.toggle() }
             .onHover { hovering = $0 }

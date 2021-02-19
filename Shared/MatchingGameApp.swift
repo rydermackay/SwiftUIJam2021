@@ -7,14 +7,52 @@
 
 import SwiftUI
 
+class UserSettings: ObservableObject {
+    @Published
+    var cardColor: Color = .accentColor
+}
+
 @main
 struct MatchingGameApp: App {
     
-    let game = Game(difficulty: .medium)
+    @AppStorage("difficulty")
+    private var difficulty: Game.Difficulty = .medium
+    
+    let settings = UserSettings()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(game: game)
+            let game = Game(difficulty: difficulty)
+            GameView(game: game).environmentObject(settings)
         }
+        
+        #if os(macOS)
+        Settings {
+            SettingsView().environmentObject(settings)
+        }
+        #endif
     }
+}
+
+struct SettingsView: View {
+    @AppStorage("difficulty")
+    private var difficulty: Game.Difficulty = .medium
+    
+//    @AppStorage("cardColor")
+    @EnvironmentObject
+    private var settings: UserSettings
+    
+    var body: some View {
+        Form {
+            Picker(selection: $difficulty, label: Text("Difficulty:"), content: {
+                ForEach(Game.Difficulty.allCases) {
+                    Text($0.rawValue.capitalized).tag($0)
+                }
+            })
+            ColorPicker("Card Color:", selection: $settings.cardColor)
+        }
+        .padding(20)
+        .frame(width: 350, height: nil, alignment: .center)
+    }
+    
 }
