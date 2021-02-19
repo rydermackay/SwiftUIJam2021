@@ -18,7 +18,7 @@ struct ContentView: View {
     var body: some View {
         let numberOfColumns = 6
         let numberOfRows = game.cards.count / numberOfColumns
-        let spacing: CGFloat = 16
+        let spacing: CGFloat = 32
         let cardHeight: CGFloat = 300
         let height = CGFloat(numberOfRows) * cardHeight + CGFloat(numberOfRows + 1) * spacing
         
@@ -30,7 +30,7 @@ struct ContentView: View {
                 CardView(card: $0)
             }
         }
-        .padding()
+        .padding(spacing)
         .frame(width: nil, height: height, alignment: .center)
     }
 }
@@ -39,6 +39,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ContentView(game: Game(difficulty: .medium))
+                .previewLayout(.sizeThatFits)
         }
         
         Group {
@@ -59,19 +60,19 @@ struct CardView: View {
     }
     
     var body: some View {
-        Text(String(card.visible ? card.animal : ""))
+        Text(String(card.animal))
             .font(.system(size: 128, weight: .bold, design: Font.Design.rounded))
+            .opacity(card.visible ? 1 : 0)
             .foregroundColor(.black)
             .frame(width: 200, height: 300, alignment: .center)
             .background(card.visible ? Color.white : Color.accentColor)
-            .border(Color.accentColor, width: 8)
-            .cornerRadius(16.0, antialiased: true)
+            .cornerRadius(16, antialiased: true)
             .onTapGesture { card.visible.toggle() }
             .onHover { hovering = $0 }
             .zIndex(hovering ? 3 : card.visible ? 2 : 1)
             .scaleEffect(hovering ? 1.02 : 1).animation(.easeInOut(duration: 0.1), value: hovering)
             .rotation3DEffect(
-                card.visible ? .radians(.pi) : .zero,
+                card.visible ? .zero : .radians(.pi),
                 axis: (x: 0.0, y: 1.0, z: 0.0)).animation(.easeInOut, value: card.visible)
         
     }
