@@ -79,7 +79,7 @@ struct CardView: View {
         Text(String(card.string))
             .font(.system(size: 128, weight: .bold, design: .rounded))
             .opacity(card.visible ? 1 : 0).animation(secondHalfFlipAnimation, value: card.visible)
-            .foregroundColor(card.color != nil ? Color(card.color!) : .black)
+            .foregroundColor(card.color ?? .black)
             .frame(width: 200, height: 300, alignment: .center)
             .background(card.visible ? Color.white : cardColor).animation(secondHalfFlipAnimation, value: card.visible)
             .cornerRadius(16, antialiased: true)
