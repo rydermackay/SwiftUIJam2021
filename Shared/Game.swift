@@ -55,6 +55,7 @@ class Game {
         case animals = "animals"
         case letters = "letters"
         case numbers = "numbers"
+        case symbols = "symbols"
         
         var id: String { return rawValue }
         
@@ -66,6 +67,8 @@ class Game {
                 return letters
             case .numbers:
                 return numbers
+            case .symbols:
+                return symbols
             }
         }
         
@@ -84,6 +87,10 @@ class Game {
         
         private var numbers: [CardContent] {
             return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"].map { ($0, .randomHue) }
+        }
+        
+        private var symbols: [CardContent] {
+            return "􀙬􀠒􀋦􀓏􀓑􀌛􀯕􀥳􀆮􀆺􀇃􀇤􀇥".map { (String($0), .randomHue )}
         }
     }
     
