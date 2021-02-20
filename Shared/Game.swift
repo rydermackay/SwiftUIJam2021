@@ -115,6 +115,6 @@ class Game {
 
 private extension Color {
     static var randomHue: Color {
-        Color(hue: .random(in: 0...1), saturation: 0.7, brightness: 0.45)
+        Color(hue: .random(in: 0...1), saturation: 0.7, brightness: 0.9)
     }
 }
