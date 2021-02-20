@@ -16,7 +16,7 @@ struct GameView: View {
     }
     
     var body: some View {
-        let numberOfColumns = 6
+        let numberOfColumns = game.cards.count / 3
         let numberOfRows = game.cards.count / numberOfColumns
         let spacing: CGFloat = 32
         let cardHeight: CGFloat = 300
@@ -36,15 +36,23 @@ struct GameView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
+    static let settings = UserSettings()
+    
     static var previews: some View {
         Group {
-            GameView(game: Game(difficulty: .medium))
+            GameView(game: Game(difficulty: .medium, vocabulary: .animals))
                 .previewLayout(.sizeThatFits)
-        }
+        }.environmentObject(settings)
         
         Group {
             CardView(card: Card(animal: "S"))
-        }
+            CardView(card: {
+                let card = Card(animal: "S")
+                card.visible = true
+                return card
+            }())
+        }.environmentObject(settings)
     }
 }
 
@@ -65,20 +73,24 @@ struct CardView: View {
     var body: some View {
         let cardColor = userSettings.cardColor
         
+        let flipDuration: TimeInterval = 0.3
+        let secondHalfFlipAnimation = Animation.timingCurve(0, 1, 0, 1, duration: flipDuration / 2).delay(flipDuration / 2)
+        
         Text(String(card.animal))
-            .font(.system(size: 128, weight: .bold, design: Font.Design.rounded))
-            .opacity(card.visible ? 1 : 0)
+            .font(.system(size: 128, weight: .bold, design: .rounded))
+            .opacity(card.visible ? 1 : 0).animation(secondHalfFlipAnimation, value: card.visible)
             .foregroundColor(.black)
             .frame(width: 200, height: 300, alignment: .center)
-            .background(card.visible ? Color.white : cardColor)
+            .background(card.visible ? Color.white : cardColor).animation(secondHalfFlipAnimation, value: card.visible)
             .cornerRadius(16, antialiased: true)
             .onTapGesture { card.visible.toggle() }
             .onHover { hovering = $0 }
             .zIndex(hovering ? 3 : card.visible ? 2 : 1)
             .scaleEffect(hovering ? 1.02 : 1).animation(.easeInOut(duration: 0.1), value: hovering)
-            .rotation3DEffect(
-                card.visible ? .zero : .radians(.pi),
-                axis: (x: 0.0, y: 1.0, z: 0.0)).animation(.easeInOut, value: card.visible)
+            .rotation3DEffect(card.visible ? .zero : .radians(.pi), axis: (x: 0, y: 1, z: 0), anchor: .center, anchorZ: 0, perspective: 0.35).animation(.easeInOut(duration: flipDuration), value: card.visible)
+//            .rotation3DEffect(
+//                card.visible ? .zero : .radians(.pi),
+//                axis: (x: 0.0, y: 1.0, z: 0.0)).animation(.easeInOut, value: card.visible)
         
     }
 }
