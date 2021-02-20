@@ -16,7 +16,7 @@ struct GameView: View {
     }
     
     var body: some View {
-        let numberOfColumns = game.cards.count / 3
+        let numberOfColumns = 6//game.cards.count / 3
         let numberOfRows = game.cards.count / numberOfColumns
         let spacing: CGFloat = 32
         let cardHeight: CGFloat = 300
@@ -46,9 +46,9 @@ struct ContentView_Previews: PreviewProvider {
         }.environmentObject(settings)
         
         Group {
-            CardView(card: Card(animal: "S"))
+            CardView(card: Card(string: "S", color: .black))
             CardView(card: {
-                let card = Card(animal: "S")
+                let card = Card(string: "S", color: .black)
                 card.visible = true
                 return card
             }())
@@ -76,10 +76,10 @@ struct CardView: View {
         let flipDuration: TimeInterval = 0.3
         let secondHalfFlipAnimation = Animation.timingCurve(0, 1, 0, 1, duration: flipDuration / 2).delay(flipDuration / 2)
         
-        Text(String(card.animal))
+        Text(String(card.string))
             .font(.system(size: 128, weight: .bold, design: .rounded))
             .opacity(card.visible ? 1 : 0).animation(secondHalfFlipAnimation, value: card.visible)
-            .foregroundColor(.black)
+            .foregroundColor(card.color != nil ? Color(card.color!) : .black)
             .frame(width: 200, height: 300, alignment: .center)
             .background(card.visible ? Color.white : cardColor).animation(secondHalfFlipAnimation, value: card.visible)
             .cornerRadius(16, antialiased: true)
