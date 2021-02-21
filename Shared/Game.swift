@@ -39,7 +39,7 @@ extension Card: Identifiable {
     }
 }
 
-class Game {
+class Game: ObservableObject {
     
     typealias CardContent = (string: String, color: Color?)
     
@@ -53,7 +53,7 @@ class Game {
         var numberOfCards: Int {
             switch self {
             case .easy:
-                return 12
+                return 8
             case .medium:
                 return 18
             case .hard:
@@ -154,7 +154,9 @@ class Game {
                 state = .started
                 
                 if matchedPairs.count == cards.count / 2 {
-                    state = .won // woohoo
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        self.state = .won // woohoo
+                    }
                 }
             } else {
                 // boo

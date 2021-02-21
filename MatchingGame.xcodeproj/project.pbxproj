@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D45615F25E3143000BF94CC /* Sparks.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0D45615E25E3143000BF94CC /* Sparks.sks */; };
+		0D45616025E3143000BF94CC /* Sparks.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0D45615E25E3143000BF94CC /* Sparks.sks */; };
+		0D45616425E3144900BF94CC /* Win.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0D45616325E3144900BF94CC /* Win.sks */; };
+		0D45616525E3144900BF94CC /* Win.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0D45616325E3144900BF94CC /* Win.sks */; };
+		0D45616925E3156000BF94CC /* WinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D45616825E3156000BF94CC /* WinView.swift */; };
+		0D45616A25E3156000BF94CC /* WinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D45616825E3156000BF94CC /* WinView.swift */; };
 		0DADBE1925E03563005214EC /* MatchingGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADBE0625E03561005214EC /* MatchingGameApp.swift */; };
 		0DADBE1A25E03563005214EC /* MatchingGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADBE0625E03561005214EC /* MatchingGameApp.swift */; };
 		0DADBE1B25E03563005214EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADBE0725E03561005214EC /* ContentView.swift */; };
@@ -18,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D45615E25E3143000BF94CC /* Sparks.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Sparks.sks; sourceTree = "<group>"; };
+		0D45616325E3144900BF94CC /* Win.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Win.sks; sourceTree = "<group>"; };
+		0D45616825E3156000BF94CC /* WinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinView.swift; sourceTree = "<group>"; };
 		0DADBE0625E03561005214EC /* MatchingGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingGameApp.swift; sourceTree = "<group>"; };
 		0DADBE0725E03561005214EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0DADBE0825E03563005214EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -62,8 +71,11 @@
 			children = (
 				0DADBE0625E03561005214EC /* MatchingGameApp.swift */,
 				0DADBE2925E0682C005214EC /* Game.swift */,
+				0D45616825E3156000BF94CC /* WinView.swift */,
 				0DADBE0725E03561005214EC /* ContentView.swift */,
 				0DADBE0825E03563005214EC /* Assets.xcassets */,
+				0D45615E25E3143000BF94CC /* Sparks.sks */,
+				0D45616325E3144900BF94CC /* Win.sks */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -172,7 +184,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D45616425E3144900BF94CC /* Win.sks in Resources */,
 				0DADBE1D25E03563005214EC /* Assets.xcassets in Resources */,
+				0D45615F25E3143000BF94CC /* Sparks.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +194,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D45616525E3144900BF94CC /* Win.sks in Resources */,
 				0DADBE1E25E03563005214EC /* Assets.xcassets in Resources */,
+				0D45616025E3143000BF94CC /* Sparks.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +209,7 @@
 			files = (
 				0DADBE1B25E03563005214EC /* ContentView.swift in Sources */,
 				0DADBE2A25E0682C005214EC /* Game.swift in Sources */,
+				0D45616925E3156000BF94CC /* WinView.swift in Sources */,
 				0DADBE1925E03563005214EC /* MatchingGameApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,6 +220,7 @@
 			files = (
 				0DADBE1C25E03563005214EC /* ContentView.swift in Sources */,
 				0DADBE2B25E0682C005214EC /* Game.swift in Sources */,
+				0D45616A25E3156000BF94CC /* WinView.swift in Sources */,
 				0DADBE1A25E03563005214EC /* MatchingGameApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

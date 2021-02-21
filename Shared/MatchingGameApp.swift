@@ -26,7 +26,7 @@ struct MatchingGameApp: App {
     var body: some Scene {
         WindowGroup {
             let game = Game(difficulty: difficulty, vocabulary: settings.vocabulary)
-            GameView(game: game).environmentObject(settings)
+            GameWrapper(game: game).environmentObject(settings)
         }
         
         #if os(macOS)

@@ -7,6 +7,25 @@
 
 import SwiftUI
 
+struct GameWrapper: View {
+    
+    @ObservedObject
+    var game: Game
+    
+    init(game: Game) {
+        self.game = game
+    }
+    
+    var body: some View {
+        ZStack {
+            GameView(game: game)
+            if case .won = game.state {
+                WinView()
+            }
+        }
+    }
+}
+
 struct GameView: View {
     
     let game: Game
@@ -16,7 +35,7 @@ struct GameView: View {
     }
     
     var body: some View {
-        let numberOfColumns = 6//game.cards.count / 3
+        let numberOfColumns = 4//game.cards.count / 3
         let numberOfRows = game.cards.count / numberOfColumns
         let spacing: CGFloat = 32
         let cardHeight: CGFloat = 300
