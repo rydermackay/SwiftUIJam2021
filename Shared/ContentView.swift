@@ -25,9 +25,14 @@ struct GameView: View {
         let item = GridItem(.fixed(200), spacing: spacing, alignment: .center)
         let columns = Array(repeating: item, count: numberOfColumns)
         
+        let game = self.game
+        
         LazyVGrid(columns: columns, spacing: spacing) {
             ForEach(game.cards) {
-                CardView(card: $0)
+                let card = $0
+                CardView(card: $0).onTapGesture {
+                    game.pick(card)
+                }
             }
         }
         .padding(spacing)
@@ -83,7 +88,6 @@ struct CardView: View {
             .frame(width: 200, height: 300, alignment: .center)
             .background(card.visible ? Color.white : cardColor).animation(secondHalfFlipAnimation, value: card.visible)
             .cornerRadius(16, antialiased: true)
-            .onTapGesture { card.visible.toggle() }
             .onHover { hovering = $0 }
             .zIndex(hovering ? 3 : card.visible ? 2 : 1)
             .scaleEffect(hovering ? 1.02 : 1).animation(.easeInOut(duration: 0.1), value: hovering)

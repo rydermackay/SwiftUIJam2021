@@ -13,12 +13,23 @@ class Card: ObservableObject {
     let string: String
     let color: Color?
     
+    weak var pair: Card?
+    
     @Published
     var visible: Bool = false
     
     init(string: String, color: Color? = nil) {
         self.string = string
         self.color = color
+    }
+    
+    static func matchingPair(_ content: Game.CardContent) -> (Card, Card) {
+        let (string, color) = content
+        let card1 = Card(string: string, color: color)
+        let card2 = Card(string: string, color: color)
+        card1.pair = card2
+        card2.pair = card1
+        return (card1, card2)
     }
 }
 
@@ -104,19 +115,75 @@ class Game {
         let candidates = vocabulary.candidates
         
         // add pairs of cards
-        var cardFaces: [CardContent] = []
-        while cardFaces.count < difficulty.numberOfCards,
+        var cards: [Card] = []
+        while cards.count < difficulty.numberOfCards,
               let content = candidates.randomElement() {
-            guard !cardFaces.contains(where: { $0.string == content.string }) else {
+            guard !cards.contains(where: { $0.string == content.string }) else {
                 continue
             }
-            cardFaces.append(content)
-            cardFaces.append(content)
+            let (card1, card2) = Card.matchingPair(content)
+            cards.append(card1)
+            cards.append(card2)
         }
-        cardFaces.shuffle()
-        
-        cards = cardFaces.map(Card.init)
+        self.cards = cards.shuffled()
     }
+    
+    enum State {
+        case started
+        case findMatch(for: Card)
+        case animatingMismatch
+        case won
+    }
+    
+    func pick(_ card: Card) {
+        precondition(cards.contains { $0 === card })
+        guard !matchedPairs.contains(where: { (card1, card2) in card1 === card || card2 === card }) else {
+            print("selected already matched card, ignoring")
+            return
+        }
+        
+        switch state {
+        case .started:
+            card.visible = true
+            state = .findMatch(for: card)
+        case .findMatch(for: let pair):
+            card.visible = true
+            if card.pair === pair {
+                // hooray
+                matchedPairs.append((card, pair))
+                state = .started
+                
+                if matchedPairs.count == cards.count / 2 {
+                    state = .won // woohoo
+                }
+            } else {
+                // boo
+                mismatchCount += 1
+                state = .animatingMismatch
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    card.visible = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                        pair.visible = false
+                        self.state = .started
+                    }
+                }
+            }
+        case .animatingMismatch:
+            break
+        case .won:
+            break // can't do anything
+        }
+    }
+    
+    // keep these visible
+    @Published
+    var matchedPairs: [(Card, Card)] = []
+    
+    @Published
+    var state: State = .started
+    
+    @Published
+    var mismatchCount: Int = 0
     
 }
 
